@@ -29,6 +29,7 @@ namespace DatingAppAPI
                 options.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -48,9 +49,10 @@ namespace DatingAppAPI
             {
                 app.UseExceptionHandler("/Error");
             }
-
+              
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+;            app.UseSpaStaticFiles();
 
             app.UseMvc(routes =>
             {
